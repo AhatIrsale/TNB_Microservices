@@ -1,0 +1,41 @@
+version: '3'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ""
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+
+
+
+  eurekaserver:
+    build:
+      context: ./eurekaserver
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+
+
+
+
+
+
+networks:
+  app-network:
+    driver: bridge
