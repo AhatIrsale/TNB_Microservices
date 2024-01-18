@@ -100,9 +100,6 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .authorizeRequests().antMatchers("/api/auth/**").permitAll()
             .antMatchers("/").permitAll()
         .antMatchers("/api/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/eureka/**").authenticated() // eureka client
-            .antMatchers(HttpMethod.POST, "/eureka/**").authenticated() // eureka client
-            .antMatchers(HttpMethod.DELETE, "/eureka/**").authenticated() // eureka client
         .anyRequest().authenticated();
 
     http.authenticationProvider(authenticationProvider());

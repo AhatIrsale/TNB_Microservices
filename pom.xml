@@ -7,8 +7,8 @@
 
     <modules>
         <module>eurekaserver</module>
-        <module>RedevableTNB</module>
+        <module>redevabletnb</module>
         <module>gateway</module>
-        <module>TNB</module>
+        <module>tnb</module>
     </modules>
 </project>

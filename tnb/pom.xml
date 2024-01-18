@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>TNB</artifactId>
+	<artifactId>tnb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>TNB</name>
 	<description>Demo project for Spring Boot</description>
@@ -111,6 +111,15 @@
 			</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.7.0.1746</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>

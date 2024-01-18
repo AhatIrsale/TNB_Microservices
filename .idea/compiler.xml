@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
-        <module name="RedevableTNB" />
-        <module name="TNB" />
+        <module name="tnb" />
+        <module name="redevabletnb" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
@@ -17,16 +17,16 @@
       <module name="Back-End" target="1.5" />
       <module name="eurekaserver" target="17" />
       <module name="gateway" target="17" />
-      <module name="RedevableTNB" target="17" />
-      <module name="TNB" target="17" />
+      <module name="redevabletnb" target="17" />
+      <module name="tnb" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="RedevableTNB" options="-parameters" />
-      <module name="TNB" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="redevabletnb" options="-parameters" />
+      <module name="tnb" options="-parameters" />
     </option>
   </component>
 </project>
