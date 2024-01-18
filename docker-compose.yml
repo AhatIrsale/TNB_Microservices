@@ -1,11 +1,11 @@
-version: '3'
+ersion: '3'
 services:
   db:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: "root"
     ports:
-      - "3307:3306"
+      - "3304:3306"
     networks:
       - app-network
   phpmyadmin:
@@ -16,7 +16,7 @@ services:
       MYSQL_ROOT_PASSWORD: ""
       #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
-      - "8081:80"
+      - "8070:80"
     networks:
       - app-network
 
@@ -26,7 +26,7 @@ services:
     build:
       context: ./eurekaserver
     ports:
-      - "8761:8761"
+      - "8762:8761"
     networks:
       - app-network
 
