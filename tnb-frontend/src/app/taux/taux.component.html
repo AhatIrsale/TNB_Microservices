@@ -1,0 +1,92 @@
+<!-- Include Bootstrap CSS in your project -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+
+  <h1>Taux works!</h1>
+
+  <div class="mt-4">
+    <h2>Taux</h2>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Anne</th>
+          <th scope="col">Valeur</th>
+          <th scope="col">Catégorie</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let taux of tauxList">
+          <ng-container *ngIf="editedTauxId !== taux.id; else editMode">
+            <td>{{ taux.anne }}</td>
+            <td>{{ taux.valeur }}</td>
+            <td>{{ taux.cat.libelle }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" (click)="editTaux(taux.id)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteTaux(taux.id)">Delete</button>
+            </td>
+          </ng-container>
+          <ng-template #editMode>
+            <td colspan="4">
+              <form (submit)="updateTaux(taux)">
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <label for="anne">Anne:</label>
+                    <input type="number" class="form-control" id="anne" [(ngModel)]="taux.anne" name="anne" required />
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label for="valeur">Valeur:</label>
+                    <input type="number" class="form-control" id="valeur" [(ngModel)]="taux.valeur" name="valeur" required />
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label for="categorieId">Catégorie:</label>
+                    <select class="form-control" id="categorieId" [(ngModel)]="taux.cat.id" name="categorieId" required>
+                      <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-sm btn-success">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mt-4">
+      <h3>Create New Taux</h3>
+      <form (submit)="createTaux()">
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="newAnne">Anne:</label>
+            <input type="number" class="form-control" id="newAnne" [(ngModel)]="newTaux.anne" name="newAnne" required />
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="newValeur">Valeur:</label>
+            <input type="number" class="form-control" id="newValeur" [(ngModel)]="newTaux.valeur" name="newValeur" required />
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="newCategorieId">Catégorie:</label>
+            <select class="form-control" id="newCategorieId" [(ngModel)]="newTaux.cat" name="newCategorieId" required>
+              <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create</button>
+      </form>
+    </div>
+
+  </div>
+
+</div>

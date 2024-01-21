@@ -1,0 +1,29 @@
+<h1>client works!</h1>
+
+<div>
+  <h2>Clients</h2>
+  <ul>
+    <li *ngFor="let client of clients">
+      <span *ngIf="editedClientId !== client.id; else editMode">
+        {{ client.nom }} - {{ client.cin }}
+        <button (click)="editClient(client.id)">Edit</button>
+        <button (click)="deleteClient(client.id)">Delete</button>
+      </span>
+      <ng-template #editMode>
+        <input [(ngModel)]="client.nom" placeholder="Nom" />
+        <input [(ngModel)]="client.cin" placeholder="CIN" />
+        <button (click)="updateClient(client)">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div>
+    <h3>Create New Client</h3>
+    <input [(ngModel)]="newClient.nom" placeholder="Nom" />
+    <input [(ngModel)]="newClient.cin" placeholder="CIN" />
+    <button (click)="createClient()">Create</button>
+  </div>
+</div>
+
+

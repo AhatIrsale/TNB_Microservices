@@ -1,0 +1,104 @@
+<!-- Include Bootstrap CSS in your project -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+
+  <h1>Terrain works!</h1>
+
+  <div class="mt-4">
+    <h2>Terrains</h2>
+
+    <ul class="list-group">
+      <li *ngFor="let terrain of terrainList" class="list-group-item">
+        <ng-container *ngIf="editedTerrainId !== terrain.id; else editMode">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              {{ terrain.nom }} - {{ terrain.surface }} - {{ terrain.cat.libelle }} - {{ terrain.client.nom }}
+            </div>
+            <div>
+              <button class="btn btn-sm btn-primary mr-2" (click)="editTerrain(terrain.id)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteTerrain(terrain.id)">Delete</button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #editMode>
+          <form (submit)="updateTerrain(terrain)">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="nom">Nom:</label>
+                <input type="text" class="form-control" id="nom" [(ngModel)]="terrain.nom" name="nom" required />
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="surface">Surface:</label>
+                <input type="number" class="form-control" id="surface" [(ngModel)]="terrain.surface" name="surface" required />
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="categorieId">Catégorie:</label>
+                <select class="form-control" id="categorieId" [(ngModel)]="terrain.cat.id" name="categorieId" required>
+                  <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="clientId">Client:</label>
+                <select class="form-control" id="clientId" [(ngModel)]="terrain.client.id" name="clientId" required>
+                  <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div class="mt-4">
+      <h3>Create New Terrain</h3>
+      <form (submit)="createTerrain()">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="newNom">Nom:</label>
+            <input type="text" class="form-control" id="newNom" [(ngModel)]="newTerrain.nom" name="newNom" required />
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="newSurface">Surface:</label>
+            <input type="number" class="form-control" id="newSurface" [(ngModel)]="newTerrain.surface" name="newSurface" required />
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="newCategorieId">Catégorie:</label>
+            <select class="form-control" id="newCategorieId" [(ngModel)]="newTerrain.cat" name="newCategorieId" required>
+              <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="newClientId">Client:</label>
+            <select class="form-control" id="newClientId" [(ngModel)]="newTerrain.client" name="newClientId" required>
+              <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <button type="submit" class="btn btn-success">Create</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

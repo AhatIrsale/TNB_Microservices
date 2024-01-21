@@ -1,41 +1,101 @@
 version: '3'
 services:
-  db:
+  mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3309:3306"
+      - "3306:3306"
     networks:
-      - app-network
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: ""
-      #MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - "8081:80"
-    networks:
-      - app-network
-
-
+      - my-network
+    expose:
+      - "3306"
 
   eurekaserver:
     build:
       context: ./eurekaserver
     ports:
-      - "8762:8761"
+      - "8761:8761"
     networks:
-      - app-network
+      - my-network
+    expose:
+      - "8761"
 
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eurekaserver
+    environment:
+      EUREKA_URI: http://eureka-server:8761
+    networks:
+      - my-network
+    expose:
+      - "8888"
 
+  redevabletnb:
+    build:
+      context: ./redevabletnb
+    ports:
+      - "8086:8086"
+    depends_on:
+      - mysql
+      - eurekaserver
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/usertnb?createDatabaseIfNotExist=true
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: root
+        EUREKA_URI: http://eureka-server:8761
+    networks:
+      - my-network
+    expose:
+      - "8086"
 
+  tnb:
+    build:
+      context: ./tnb
+    ports:
+      - "8087:8087"
+    depends_on:
+      - eurekaserver
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mytnb?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_URI: http://eureka-server:8761
+    networks:
+      - my-network
+    expose:
+      - "8087"
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "9000:80"
+    networks:
+      - my-network
+    expose:
+      - "80"
+
+  frontend:
+    build:
+      context: ./tnb-frontend
+    ports:
+      - "80:80"
+    networks:
+      - my-network
+    expose:
+      - "80"
 
 
 
 networks:
-  app-network:
+  my-network:
     driver: bridge

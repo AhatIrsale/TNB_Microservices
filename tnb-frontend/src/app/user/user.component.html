@@ -1,0 +1,47 @@
+<p>user works!</p>
+<!-- user.component.html -->
+<div>
+  <h2>User Management</h2>
+
+  <!-- List Users -->
+  <div *ngIf="!isEditing">
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.username }}
+        <button (click)="viewUserDetails(user)">View Details</button>
+        <button (click)="editUser(user)">Edit</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- View Details -->
+  <div *ngIf="selectedUser.id && !isEditing">
+    <h3>User Details</h3>
+    <p>ID: {{ selectedUser.id }}</p>
+    <p>Username: {{ selectedUser.username }}</p>
+    <p>Email: {{ selectedUser.email }}</p>
+    <button (click)="isEditing = true">Edit</button>
+  </div>
+
+  <!-- Edit User -->
+  <div *ngIf="isEditing">
+    <h3>Edit User</h3>
+    <label>Username: <input [(ngModel)]="selectedUser.username" /></label>
+    <label>Email: <input [(ngModel)]="selectedUser.email" /></label>
+    <button (click)="updateUser()">Update</button>
+    <button (click)="isEditing = false">Cancel</button>
+  </div>
+
+  <!-- Create User -->
+  <div>
+    <h3>Create User</h3>
+    <label>Username: <input [(ngModel)]="newUser.username" /></label>
+    <label>Email: <input [(ngModel)]="newUser.email" /></label>
+    <button (click)="signupUser()">Create</button>
+  </div>
+
+  <!-- Delete User -->
+  <div *ngIf="selectedUser.id && !isEditing">
+    <button (click)="deleteUser(selectedUser.id)">Delete User</button>
+  </div>
+</div>

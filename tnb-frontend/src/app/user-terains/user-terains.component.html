@@ -1,0 +1,40 @@
+<p> Bonjour Mr {{currentUser.username}} | user-terains works!</p>
+
+<div class="container mt-3">
+  <h2>Liste des Terrains</h2>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID Terrain</th>
+        <th>Nom</th>
+        <th>Surface</th>
+        <th>Catégorie</th>
+        <th>Utilisateur</th>
+        <th>Taxe</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="terrains && terrains.length > 0; else noTerrains">
+      <tr *ngFor="let terrain of terrains">
+        <td>{{ terrain.id }}</td>
+        <td>{{ terrain.nom }}</td>
+        <td>{{ terrain.surface }}</td>
+        <td>{{ terrain.cat.libelle }}</td>
+        <td>{{ terrain.user.username }}</td>
+        <td>
+          <ng-container *ngIf="terrain.taxes.length > 0">
+            {{ terrain.taxes[0].taux.valeur }}
+          </ng-container>
+          <ng-container *ngIf="terrain.taxes.length === 0">
+            N/A
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noTerrains>
+      <tr>
+        <td colspan="6">Vous n'avez pas de terrain.</td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

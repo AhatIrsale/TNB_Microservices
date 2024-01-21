@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eurekaserver" />
         <module name="RedevableTNB" />
+        <module name="eurekaserver" />
         <module name="TNB" />
         <module name="gateway" />
       </profile>

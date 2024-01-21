@@ -1,0 +1,82 @@
+<style>
+  /* Add some general styling for better aesthetics */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3 {
+    color: #333;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  button {
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+  input {
+    padding: 8px;
+    margin-right: 10px;
+  }
+
+  /* Style for the create new category section */
+  div {
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+  }
+</style>
+
+<!-- Your existing HTML code -->
+<h1>categorie works!</h1>
+
+<h2>Categories</h2>
+
+<ul>
+  <!-- Your ngFor loop remains the same -->
+  <li *ngFor="let categorie of categories">
+    <span *ngIf="editedCategorieId !== categorie.id; else editMode">
+      {{ categorie.libelle }} - {{ categorie.description }}
+      <button (click)="editCategorie(categorie.id)">Edit</button>
+      <button (click)="deleteCategorie(categorie.id)">Delete</button>
+    </span>
+    <ng-template #editMode>
+      <input [(ngModel)]="categorie.libelle" placeholder="Libelle" />
+      <input [(ngModel)]="categorie.description" placeholder="Description" />
+      <button (click)="updateCategorie(categorie)">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </ng-template>
+  </li>
+</ul>
+
+<div>
+  <h3>Create New Categorie</h3>
+  <input [(ngModel)]="newCategorie.libelle" placeholder="Libelle" />
+  <input [(ngModel)]="newCategorie.description" placeholder="Description" />
+  <button (click)="createCategorie()">Create</button>
+</div>

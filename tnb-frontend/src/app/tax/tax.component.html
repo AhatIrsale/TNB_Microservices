@@ -1,0 +1,108 @@
+<!-- Include Bootstrap CSS in your project -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4">
+
+  <h1>Taxe works!</h1>
+
+  <div class="mt-4">
+    <h2>Taxe</h2>
+
+    <ul class="list-group">
+      <li *ngFor="let taxe of taxeList" class="list-group-item">
+        <ng-container *ngIf="editedTaxeId !== taxe.id; else editMode">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              {{ taxe.marque }} - {{ taxe.client.nom }} - {{ taxe.taux.anne }}
+            </div>
+            <div>
+              <button class="btn btn-sm btn-primary mr-2" (click)="editTaxe(taxe.id)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteTaxe(taxe.id)">Delete</button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #editMode>
+          <form (submit)="updateTaxe(taxe)">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="marque">Marque:</label>
+                <input type="text" class="form-control" id="marque" [(ngModel)]="taxe.marque" name="marque" required />
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="clientId">Client:</label>
+                <select class="form-control" id="clientId" [(ngModel)]="taxe.client.id" name="clientId" required>
+                  <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }}</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="tauxId">Taux:</label>
+                <select class="form-control" id="tauxId" [(ngModel)]="taxe.taux.id" name="tauxId" required>
+                  <option *ngFor="let taux of tauxList" [value]="taux.id">{{ taux.anne }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="terrainId">Terrain:</label>
+                <select class="form-control" id="terrainId" [(ngModel)]="taxe.terrain.id" name="terrainId" required>
+                  <option *ngFor="let terrain of terrainList" [value]="terrain.id">{{ terrain.nom }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div class="mt-4">
+      <h3>Create New Taxe</h3>
+      <form (submit)="createTaxe()">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="newMarque">Marque:</label>
+            <input type="text" class="form-control" id="newMarque" [(ngModel)]="newTaxe.marque" name="newMarque" required />
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="newClientId">Client:</label>
+            <select class="form-control" id="newClientId" [(ngModel)]="newTaxe.client" name="newClientId" required>
+              <option *ngFor="let client of clients" [value]="client.id">{{ client.nom }}</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="newTauxId">Taux:</label>
+            <select class="form-control" id="newTauxId" [(ngModel)]="newTaxe.taux" name="newTauxId" required>
+              <option *ngFor="let taux of tauxList" [value]="taux.id">{{ taux.anne }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="newTerrainId">Terrain:</label>
+            <select class="form-control" id="newTerrainId" [(ngModel)]="newTaxe.terrain" name="newTerrainId" required>
+              <option *ngFor="let terrain of terrainList" [value]="terrain.id">{{ terrain.nom }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <button type="submit" class="btn btn-success">Create</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

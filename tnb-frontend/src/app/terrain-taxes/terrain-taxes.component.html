@@ -1,0 +1,74 @@
+<p>terrain-taxes works!</p>
+<!-- terrains.component.html -->
+
+<!-- terrains.component.html -->
+
+<!-- terrains.component.html -->
+
+<div class="container mt-3">
+  <h2>Liste des Terrains</h2>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID Terrain</th>
+        <th>Nom</th>
+        <th>Surface</th>
+        <th>Catégorie</th>
+        <th>Utilisateur</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="terrains && terrains.length > 0; else noTerrains">
+      <tr *ngFor="let terrain of terrains">
+        <td>{{ terrain.id }}</td>
+        <td>{{ terrain.nom }}</td>
+        <td>{{ terrain.surface }}</td>
+        <td>{{ terrain.cat.libelle }}</td>
+        <td>{{ terrain.user.username }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="afficherTaxes(terrain)">Afficher les taxes</button>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noTerrains>
+      <tr>
+        <td colspan="6">Vous n'avez pas de terrain.</td>
+      </tr>
+    </ng-template>
+  </table>
+
+  <div *ngIf="taxesVisible">
+    <h3>Taxes du Terrain</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID Taxe</th>
+          <th>Marque</th>
+          <th>Valeur</th>
+          <th>Action</th>
+          <!-- Ajoutez d'autres colonnes de taxe si nécessaire -->
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="taxes && taxes.length > 0; else noTaxes">
+          <tr *ngFor="let taxe of taxes">
+            <td>{{ taxe.id }}</td>
+            <td>{{ taxe.marque }}</td>
+            <td>{{ taxe.taux.valeur }}</td>
+            <td>
+              <button class="btn btn-success" >Payer</button>
+            </td>
+            <!-- Ajoutez d'autres colonnes de taxe si nécessaire -->
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <ng-template #noTaxes>
+      <p>Aucune taxe pour ce terrain pour le moment.</p>
+    </ng-template>
+  </div>
+</div>
+
+
+
