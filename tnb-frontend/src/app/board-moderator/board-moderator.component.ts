@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/AuthService/user.service';
+import { UserService } from '../Services/AuthService/user.service';
 
 @Component({
   selector: 'app-board-moderator',
